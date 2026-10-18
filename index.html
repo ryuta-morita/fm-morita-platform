@@ -327,6 +327,7 @@
       var STORAGE_KEY_PASSCODE = 'fm_morita_admin_passcode_v2';
       var STORAGE_KEY_UNLOCKED = 'fm_morita_admin_unlocked_v1';
       var DEFAULT_ADMIN_PASSCODE = '4662';
+      var GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwh55Ln4wv16SiCqQ5mSdPbz9t8m47mvTurGgl3xWzPl8mJT0rDNuSUzES-mAvhbSJ-RQ/exec';
 
       var INITIAL_SAMPLE_LETTERS = [
         {
@@ -571,9 +572,37 @@
             status: 'unread'
           };
 
-          state.letters.unshift(newItem);
-          saveLetters();
-          inputMsg.value = '';
+          fetch(GOOGLE_APPS_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+              'Content-Type': 'text/plain;charset=utf-8'
+            },
+            body: JSON.stringify({
+              id: newItem.id,
+              createdAt: newItem.createdAt,
+              radioName: newItem.radioName,
+              message: newItem.message,
+              status: newItem.status
+            })
+          }).then(function () {
+            state.letters.unshift(newItem);
+            saveLetters();
+            inputMsg.value = '';
+            charCount.textContent = '0';
+            render();
+          
+            if (successBanner) {
+              successBanner.classList.remove('hidden');
+              if (successTimer) clearTimeout(successTimer);
+              successTimer = setTimeout(function () {
+                successBanner.classList.add('hidden');
+              }, 4000);
+            }
+            showToast('ありがとうございます、送信しました');
+          }).catch(function () {
+            showToast('送信できませんでした。時間をおいて再度お試しください');
+          });          inputMsg.value = '';
           charCount.textContent = '0';
           render();
 
