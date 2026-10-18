@@ -22,21 +22,3 @@ function doPost(e) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 
-function doGet() {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  var rows = sheet.getDataRange().getValues();
-  var items = [];
-  for (var i = 1; i < rows.length; i++) {
-    var r = rows[i];
-    items.push({
-      id: String(r[0]), createdAt: String(r[1]), corner: String(r[2]),
-      radioName: String(r[3]), grade: String(r[4]), prefecture: String(r[5]),
-      songTitle: String(r[6]), artistName: String(r[7]), moodTag: String(r[8]),
-      message: String(r[9]), callIn: String(r[10]), contactMemo: String(r[11]),
-      status: String(r[12] || 'unread'), djNote: String(r[13] || ''),
-      starred: false, publishBbs: true, likes: 1
-    });
-  }
-  return ContentService.createTextOutput(JSON.stringify({ items: items }))
-    .setMimeType(ContentService.MimeType.JSON);
-}

@@ -143,174 +143,15 @@
       </form>
     </section>
 
-    <!-- SECTION 2: STOCK LIST (ADMIN ONLY - HIDDEN BY DEFAULT) -->
-    <section id="adminStockSection" aria-labelledby="stockHeading" class="hidden sol-card rounded-xl p-6 sm:p-7 space-y-5">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/15 pb-4">
-        <div>
-          <div class="flex items-center gap-2">
-            <h2 id="stockHeading" class="font-display text-lg sm:text-xl text-white flex items-center gap-2">
-              <span class="inline-block w-2.5 h-5 bg-white"></span>
-              <span>お便り・リクエスト ストック一覧</span>
-            </h2>
-            <span class="text-[11px] bg-sol-yellow text-black font-bold px-2 py-0.5 rounded">管理者専用</span>
-          </div>
-          <p class="text-xs text-neutral-400 mt-1">
-            総ストック: <strong id="kpiTotal" class="text-white">0</strong>件 ／
-            キープ(★): <strong id="kpiStarred" class="text-sol-yellow">0</strong>件 ／
-            未読: <strong id="kpiUnread" class="text-white">0</strong>件
-          </p>
-        </div>
-
-        <!-- Stock Backup / Export Controls -->
-        <div class="flex flex-wrap items-center gap-2">
-          <button
-            type="button"
-            id="btnExportCsv"
-            class="sol-btn bg-sol-yellow text-black text-xs font-bold px-3 py-2 rounded-lg border border-black"
-          >
-            CSV出力
-          </button>
-          <button
-            type="button"
-            id="btnExportJson"
-            class="sol-btn bg-neutral-800 hover:bg-neutral-700 text-white text-xs font-bold px-3 py-2 rounded-lg border border-white/25"
-          >
-            JSON保存
-          </button>
-          <label
-            for="inputImportJsonFile"
-            class="sol-btn cursor-pointer bg-neutral-800 hover:bg-neutral-700 text-white text-xs font-bold px-3 py-2 rounded-lg border border-white/25"
-          >
-            JSON読込
-            <input id="inputImportJsonFile" type="file" accept=".json,application/json" class="hidden" />
-          </label>
-          <button
-            type="button"
-            id="btnOpenPasscodeChange"
-            class="sol-btn bg-neutral-800 hover:bg-neutral-700 text-neutral-300 text-xs font-bold px-3 py-2 rounded-lg border border-white/20"
-          >
-            パスコード変更
-          </button>
-          <button
-            type="button"
-            id="btnLockAdmin"
-            class="sol-btn bg-black hover:bg-neutral-900 text-sol-yellow text-xs font-bold px-3 py-2 rounded-lg border border-sol-yellow/60"
-          >
-            非表示にする
-          </button>
-        </div>
-      </div>
-
-      <!-- Inline Passcode Change Box (Hidden by default) -->
-      <div id="passcodeChangeBox" class="hidden bg-black/70 border border-white/20 rounded-lg p-3.5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
-        <label for="inputNewPasscode" class="text-xs font-bold text-neutral-200">
-          新しい管理者パスコードを設定:
-        </label>
-        <div class="flex items-center gap-2">
-          <input
-            id="inputNewPasscode"
-            type="password"
-            maxlength="32"
-            placeholder="新しいパスコード"
-            class="bg-black border border-white/25 focus:border-sol-yellow rounded px-3 py-1.5 text-xs text-white outline-none"
-          />
-          <button type="button" id="btnSaveNewPasscode" class="sol-btn bg-sol-yellow text-black text-xs font-bold px-3 py-1.5 rounded border border-black">
-            保存
-          </button>
-          <button type="button" id="btnCancelNewPasscode" class="text-xs text-neutral-400 hover:text-white px-2 py-1">
-            閉じる
-          </button>
-        </div>
-      </div>
-
-      <!-- Simple Search & Filter Bar -->
-      <div class="flex flex-col sm:flex-row gap-2.5">
-        <input
-          id="stockSearchInput"
-          type="text"
-          placeholder="ラジオネームや内容で検索..."
-          class="flex-1 bg-black/60 border border-white/20 focus:border-sol-yellow rounded-lg px-3.5 py-2 text-xs sm:text-sm text-white placeholder-neutral-500 outline-none"
-        />
-        <select
-          id="stockStatusFilter"
-          aria-label="表示フィルター"
-          class="bg-black/60 border border-white/20 focus:border-sol-yellow rounded-lg px-3 py-2 text-xs sm:text-sm text-white font-bold outline-none"
-        >
-          <option value="ALL">すべて表示</option>
-          <option value="STARRED">★ キープのみ</option>
-          <option value="unread">未読のみ</option>
-          <option value="read">読了済のみ</option>
-        </select>
-      </div>
-
-      <!-- Stock Cards Container -->
-      <div id="stockCardsContainer" class="space-y-3">
-        <!-- Rendered by JS -->
-      </div>
-    </section>
-
   </main>
-
-  <!-- DELETE CONFIRMATION MODAL -->
-  <div id="deleteConfirmModal" class="hidden fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
-    <div class="sol-card w-full max-w-sm rounded-xl p-5 border-2 border-white/30 space-y-4">
-      <h3 class="font-display text-base text-white">このお便りを削除しますか？</h3>
-      <p class="text-xs text-neutral-300 leading-relaxed">
-        ストック一覧から削除します。この操作は取り消せません。
-      </p>
-      <div class="flex justify-end gap-2">
-        <button type="button" id="btnCancelDelete" class="bg-neutral-800 text-white text-xs font-bold px-4 py-2 rounded-lg border border-white/20">
-          キャンセル
-        </button>
-        <button type="button" id="btnConfirmDelete" class="sol-btn bg-sol-yellow text-black text-xs font-bold px-4 py-2 rounded-lg border border-black">
-          削除する
-        </button>
-      </div>
-    </div>
-  </div>
 
   <!-- TOAST CONTAINER -->
   <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-  <!-- ADMIN LOGIN MODAL -->
-  <div id="adminLoginModal" class="hidden fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
-    <div class="sol-card w-full max-w-sm rounded-xl p-5 border-2 border-sol-yellow space-y-4">
-      <div class="flex items-center justify-between">
-        <h3 class="font-display text-base text-white">管理者ログイン</h3>
-        <button type="button" id="btnCloseAdminModal" class="text-neutral-400 hover:text-white text-xs font-bold">✕</button>
-      </div>
-      <p class="text-xs text-neutral-300 leading-relaxed">
-        「お便り・リクエスト ストック一覧」を表示するには管理者パスコードを入力してください。
-      </p>
-      <form id="adminLoginForm" class="space-y-3" novalidate>
-        <input
-          id="inputAdminPasscode"
-          type="password"
-          placeholder="管理者パスコードを入力"
-          class="w-full bg-black border-2 border-white/25 focus:border-sol-yellow rounded-lg px-3.5 py-2.5 text-sm text-white placeholder-neutral-500 outline-none"
-        />
-        <p id="adminLoginError" class="hidden text-xs font-bold text-sol-yellow">
-          パスコードが正しくありません。
-        </p>
-        <div class="flex justify-end gap-2 pt-1">
-          <button type="button" id="btnCancelAdminLogin" class="bg-neutral-800 text-white text-xs font-bold px-4 py-2 rounded-lg border border-white/20">
-            キャンセル
-          </button>
-          <button type="submit" id="btnSubmitAdminLogin" class="sol-btn bg-sol-yellow text-black text-xs font-bold px-4 py-2 rounded-lg border border-black">
-            ロック解除
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-
   <!-- FOOTER -->
   <footer class="border-t border-white/10 py-5 px-4 text-xs text-neutral-500">
-    <div class="max-w-3xl mx-auto flex items-center justify-between gap-2">
+    <div class="max-w-3xl mx-auto">
       <span>FM森田 お便り･リクエスト募集フォーム</span>
-      <button type="button" id="btnToggleAdminAccess" class="text-neutral-600 hover:text-neutral-300 transition-colors text-[11px]">
-        管理者用
-      </button>
     </div>
   </footer>
 
@@ -318,71 +159,7 @@
     (function () {
       'use strict';
 
-      var STORAGE_KEY_LETTERS = 'fm_morita_simple_stock_v2';
-      var STORAGE_KEY_PASSCODE = 'fm_morita_admin_passcode_v2';
-      var STORAGE_KEY_UNLOCKED = 'fm_morita_admin_unlocked_v1';
-      var DEFAULT_ADMIN_PASSCODE = '4662';
       var GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwh55Ln4wv16SiCqQ5mSdPbz9t8m47mvTurGgl3xWzPl8mJT0rDNuSUzES-mAvhbSJ-RQ/exec';
-
-      var INITIAL_SAMPLE_LETTERS = [
-        {
-          id: 'MORITA-001',
-          createdAt: '2026-10-18 22:00',
-          radioName: '放課後のテレキャスター',
-          message: '森田校長こんばんは！来週の文化祭で初めてバンドでステージに立ちます。気合を入れたいので、BUMP OF CHICKENの「天体観測」をリクエストします！',
-          starred: true,
-          status: 'unread'
-        },
-        {
-          id: 'MORITA-002',
-          createdAt: '2026-10-18 22:15',
-          radioName: '深夜2時のヘッドフォン',
-          message: 'テスト勉強のお供に毎週聴いています！夜中に聴くとグッとくるVaundyの「怪獣の花唄」をかけてほしいです。',
-          starred: false,
-          status: 'read'
-        }
-      ];
-
-      var state = {
-        letters: [],
-        search: '',
-        filter: 'ALL',
-        pendingDeleteId: null,
-        isAdminUnlocked: false
-      };
-
-      function safeGetStorage(key) {
-        try {
-          return window.localStorage.getItem(key);
-        } catch (e) {
-          return null;
-        }
-      }
-
-      function safeSetStorage(key, value) {
-        try {
-          window.localStorage.setItem(key, value);
-        } catch (e) {}
-      }
-
-      function loadLetters() {
-        var raw = safeGetStorage(STORAGE_KEY_LETTERS);
-        if (raw) {
-          try {
-            var parsed = JSON.parse(raw);
-            if (Array.isArray(parsed)) {
-              state.letters = parsed;
-              return;
-            }
-          } catch (e) {}
-        }
-        state.letters = JSON.parse(JSON.stringify(INITIAL_SAMPLE_LETTERS));
-        saveLetters();
-      }
-
-      function saveLetters() {
-        safeSetStorage(STORAGE_KEY_LETTERS, JSON.stringify(state.letters));
-      }
 
       function getNowFormatted() {
         var d = new Date();
@@ -392,15 +169,6 @@
         var hh = String(d.getHours()).padStart(2, '0');
         var mi = String(d.getMinutes()).padStart(2, '0');
         return yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + mi;
-      }
-
-      function escapeHtml(str) {
-        return String(str || '')
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;')
-          .replace(/'/g, '&#39;');
       }
 
       function showToast(msg) {
@@ -415,125 +183,7 @@
         }, 2600);
       }
 
-      function render() {
-        var total = state.letters.length;
-        var starred = state.letters.filter(function (x) { return x.starred; }).length;
-        var unread = state.letters.filter(function (x) { return x.status !== 'read'; }).length;
-
-        var adminSection = document.getElementById('adminStockSection');
-        var toggleAdminBtn = document.getElementById('btnToggleAdminAccess');
-        if (state.isAdminUnlocked) {
-          adminSection.classList.remove('hidden');
-          toggleAdminBtn.textContent = '管理者モード中 (非表示にする)';
-        } else {
-          adminSection.classList.add('hidden');
-          toggleAdminBtn.textContent = '管理者用';
-        }
-
-        document.getElementById('kpiTotal').textContent = String(total);
-        document.getElementById('kpiStarred').textContent = String(starred);
-        document.getElementById('kpiUnread').textContent = String(unread);
-
-        var q = state.search.trim().toLowerCase();
-        var filtered = state.letters.filter(function (item) {
-          if (state.filter === 'STARRED' && !item.starred) return false;
-          if (state.filter === 'unread' && item.status === 'read') return false;
-          if (state.filter === 'read' && item.status !== 'read') return false;
-          if (q) {
-            var text = ((item.radioName || '') + ' ' + (item.message || '')).toLowerCase();
-            if (text.indexOf(q) === -1) return false;
-          }
-          return true;
-        });
-
-        var container = document.getElementById('stockCardsContainer');
-        if (filtered.length === 0) {
-          container.innerHTML = (
-            '<div class="bg-black/40 border border-white/10 rounded-lg p-6 text-center text-xs text-neutral-400">' +
-            '該当するお便り・リクエストはありません。' +
-            '</div>'
-          );
-          return;
-        }
-
-        container.innerHTML = filtered.map(function (item) {
-          var isRead = item.status === 'read';
-          return (
-            '<article class="bg-black/50 rounded-lg p-4 border ' + (item.starred ? 'border-sol-yellow' : 'border-white/15') + ' space-y-2.5">' +
-              '<div class="flex flex-wrap items-center justify-between gap-2">' +
-                '<div class="flex items-center gap-2">' +
-                  '<span class="text-xs font-bold text-neutral-400">RN.</span>' +
-                  '<h3 class="font-display text-base text-white">' + escapeHtml(item.radioName) + '</h3>' +
-                  (isRead
-                    ? '<span class="text-[11px] bg-white/10 text-neutral-300 px-2 py-0.5 rounded">読了済</span>'
-                    : '<span class="text-[11px] bg-sol-yellow text-black font-bold px-2 py-0.5 rounded">未読</span>'
-                  ) +
-                '</div>' +
-                '<span class="text-xs text-neutral-400 font-mono">' + escapeHtml(item.createdAt) + '</span>' +
-              '</div>' +
-              '<p class="text-sm text-neutral-100 whitespace-pre-wrap leading-relaxed bg-black/40 p-3.5 rounded border border-white/10">' +
-                escapeHtml(item.message) +
-              '</p>' +
-              '<div class="flex items-center justify-end gap-2 pt-1">' +
-                '<button type="button" data-action="toggle-star" data-id="' + escapeHtml(item.id) + '" class="text-xs font-bold px-3 py-1.5 rounded border ' +
-                  (item.starred ? 'bg-sol-yellow text-black border-black' : 'bg-neutral-900 text-neutral-300 border-white/20 hover:border-sol-yellow') + '">' +
-                  (item.starred ? '★ キープ中' : '☆ キープ') +
-                '</button>' +
-                '<button type="button" data-action="toggle-read" data-id="' + escapeHtml(item.id) + '" class="text-xs font-bold px-3 py-1.5 rounded border bg-neutral-900 text-neutral-300 border-white/20 hover:border-white">' +
-                  (isRead ? '未読に戻す' : '読了済にする') +
-                '</button>' +
-                '<button type="button" data-action="delete" data-id="' + escapeHtml(item.id) + '" class="text-xs font-bold px-3 py-1.5 rounded border bg-neutral-900 text-neutral-400 border-white/15 hover:text-white">' +
-                  '削除' +
-                '</button>' +
-              '</div>' +
-            '</article>'
-          );
-        }).join('');
-      }
-
-      function exportCsv() {
-        var headers = ['ID', '受信日時', 'ラジオネーム', '内容', 'キープ', '状態'];
-        var rows = state.letters.map(function (item) {
-          return [
-            item.id,
-            item.createdAt,
-            item.radioName,
-            item.message,
-            item.starred ? '★' : '',
-            item.status === 'read' ? '読了済' : '未読'
-          ].map(function (cell) {
-            return '"' + String(cell == null ? '' : cell).replace(/"/g, '""') + '"';
-          }).join(',');
-        });
-        var csv = '\uFEFF' + headers.join(',') + '\r\n' + rows.join('\r\n');
-        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        var url = URL.createObjectURL(blob);
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = 'fm_morita_letters.csv';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        showToast('CSVファイルを出力しました');
-      }
-
-      function exportJson() {
-        var blob = new Blob([JSON.stringify(state.letters, null, 2)], { type: 'application/json' });
-        var url = URL.createObjectURL(blob);
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = 'fm_morita_letters.json';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        showToast('JSONファイルを保存しました');
-      }
-
       function init() {
-        loadLetters();
-
         var inputName = document.getElementById('inputRadioName');
         var inputMsg = document.getElementById('inputMessage');
         var charCount = document.getElementById('charCountDisplay');
@@ -567,12 +217,9 @@
             status: 'unread'
           };
 
-          state.letters.unshift(newItem);
-          saveLetters();
           inputName.value = '';
           inputMsg.value = '';
           charCount.textContent = '0';
-          render();
 
           if (successBanner) {
             successBanner.classList.remove('hidden');
@@ -597,9 +244,6 @@
               status: newItem.status
             })
           }).catch(function () {
-            state.letters = state.letters.filter(function (item) { return item.id !== newItem.id; });
-            saveLetters();
-            render();
             inputName.value = name;
             inputMsg.value = msg;
             charCount.textContent = String(msg.length);
@@ -607,175 +251,6 @@
             showToast('送信できませんでした。入力内容を戻しました');
           });
         });
-
-        document.getElementById('stockSearchInput').addEventListener('input', function (e) {
-          state.search = e.target.value;
-          render();
-        });
-
-        document.getElementById('stockStatusFilter').addEventListener('change', function (e) {
-          state.filter = e.target.value;
-          render();
-        });
-
-        document.getElementById('stockCardsContainer').addEventListener('click', function (e) {
-          var btn = e.target.closest('[data-action]');
-          if (!btn) return;
-          var action = btn.getAttribute('data-action');
-          var id = btn.getAttribute('data-id');
-          var item = state.letters.find(function (x) { return x.id === id; });
-          if (!item) return;
-
-          if (action === 'toggle-star') {
-            item.starred = !item.starred;
-            saveLetters();
-            render();
-          } else if (action === 'toggle-read') {
-            item.status = item.status === 'read' ? 'unread' : 'read';
-            saveLetters();
-            render();
-          } else if (action === 'delete') {
-            state.pendingDeleteId = id;
-            document.getElementById('deleteConfirmModal').classList.remove('hidden');
-          }
-        });
-
-        document.getElementById('btnCancelDelete').addEventListener('click', function () {
-          state.pendingDeleteId = null;
-          document.getElementById('deleteConfirmModal').classList.add('hidden');
-        });
-
-        document.getElementById('btnConfirmDelete').addEventListener('click', function () {
-          if (state.pendingDeleteId) {
-            state.letters = state.letters.filter(function (x) { return x.id !== state.pendingDeleteId; });
-            state.pendingDeleteId = null;
-            saveLetters();
-            render();
-            showToast('お便りを削除しました');
-          }
-          document.getElementById('deleteConfirmModal').classList.add('hidden');
-        });
-
-        document.getElementById('btnExportCsv').addEventListener('click', exportCsv);
-        document.getElementById('btnExportJson').addEventListener('click', exportJson);
-
-        document.getElementById('inputImportJsonFile').addEventListener('change', function (e) {
-          var file = e.target.files && e.target.files[0];
-          if (!file) return;
-          var reader = new FileReader();
-          reader.onload = function (ev) {
-            try {
-              var data = JSON.parse(ev.target.result);
-              var list = Array.isArray(data) ? data : (data.letters || []);
-              if (!Array.isArray(list)) throw new Error('Invalid');
-              var added = 0;
-              list.forEach(function (entry) {
-                if (entry && entry.radioName && entry.message) {
-                  state.letters.unshift({
-                    id: entry.id || ('MORITA-' + Math.floor(1000 + Math.random() * 9000)),
-                    createdAt: entry.createdAt || getNowFormatted(),
-                    radioName: entry.radioName,
-                    message: entry.message,
-                    starred: Boolean(entry.starred),
-                    status: entry.status === 'read' ? 'read' : 'unread'
-                  });
-                  added++;
-                }
-              });
-              saveLetters();
-              render();
-              showToast(added + '件のお便りを読み込みました');
-            } catch (err) {
-              showToast('JSONファイルの形式が正しくありません');
-            }
-            e.target.value = '';
-          };
-          reader.readAsText(file);
-        });
-
-        // Admin Access Controls
-        function getAdminPasscode() {
-          return safeGetStorage(STORAGE_KEY_PASSCODE) || DEFAULT_ADMIN_PASSCODE;
-        }
-
-        state.isAdminUnlocked = safeGetStorage(STORAGE_KEY_UNLOCKED) === '1';
-
-        var adminModal = document.getElementById('adminLoginModal');
-        var inputAdminPass = document.getElementById('inputAdminPasscode');
-        var adminError = document.getElementById('adminLoginError');
-
-        function openAdminModal() {
-          inputAdminPass.value = '';
-          adminError.classList.add('hidden');
-          adminModal.classList.remove('hidden');
-          inputAdminPass.focus();
-        }
-
-        function closeAdminModal() {
-          adminModal.classList.add('hidden');
-        }
-
-        document.getElementById('btnToggleAdminAccess').addEventListener('click', function () {
-          if (state.isAdminUnlocked) {
-            state.isAdminUnlocked = false;
-            safeSetStorage(STORAGE_KEY_UNLOCKED, '0');
-            render();
-            showToast('ストック一覧を非表示にしました');
-          } else {
-            openAdminModal();
-          }
-        });
-
-        document.getElementById('btnCloseAdminModal').addEventListener('click', closeAdminModal);
-        document.getElementById('btnCancelAdminLogin').addEventListener('click', closeAdminModal);
-
-        document.getElementById('adminLoginForm').addEventListener('submit', function (e) {
-          e.preventDefault();
-          var entered = inputAdminPass.value.trim();
-          if (entered === getAdminPasscode()) {
-            state.isAdminUnlocked = true;
-            safeSetStorage(STORAGE_KEY_UNLOCKED, '1');
-            closeAdminModal();
-            render();
-            showToast('管理者ロックを解除しました');
-          } else {
-            adminError.classList.remove('hidden');
-          }
-        });
-
-        document.getElementById('btnLockAdmin').addEventListener('click', function () {
-          state.isAdminUnlocked = false;
-          safeSetStorage(STORAGE_KEY_UNLOCKED, '0');
-          document.getElementById('passcodeChangeBox').classList.add('hidden');
-          render();
-          showToast('ストック一覧を非表示にしました');
-        });
-
-        document.getElementById('btnOpenPasscodeChange').addEventListener('click', function () {
-          var box = document.getElementById('passcodeChangeBox');
-          box.classList.toggle('hidden');
-          if (!box.classList.contains('hidden')) {
-            document.getElementById('inputNewPasscode').focus();
-          }
-        });
-
-        document.getElementById('btnCancelNewPasscode').addEventListener('click', function () {
-          document.getElementById('passcodeChangeBox').classList.add('hidden');
-        });
-
-        document.getElementById('btnSaveNewPasscode').addEventListener('click', function () {
-          var nextPass = document.getElementById('inputNewPasscode').value.trim();
-          if (!nextPass) {
-            showToast('新しいパスコードを入力してください');
-            return;
-          }
-          safeSetStorage(STORAGE_KEY_PASSCODE, nextPass);
-          document.getElementById('inputNewPasscode').value = '';
-          document.getElementById('passcodeChangeBox').classList.add('hidden');
-          showToast('管理者パスコードを更新しました');
-        });
-
-        render();
       }
 
       init();
