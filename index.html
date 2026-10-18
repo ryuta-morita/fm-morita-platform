@@ -567,6 +567,22 @@
             status: 'unread'
           };
 
+          state.letters.unshift(newItem);
+          saveLetters();
+          inputName.value = '';
+          inputMsg.value = '';
+          charCount.textContent = '0';
+          render();
+
+          if (successBanner) {
+            successBanner.classList.remove('hidden');
+            if (successTimer) clearTimeout(successTimer);
+            successTimer = setTimeout(function () {
+              successBanner.classList.add('hidden');
+            }, 4000);
+          }
+          showToast('ありがとうございます、送信しました！');
+
           fetch(GOOGLE_APPS_SCRIPT_URL, {
             method: 'POST',
             mode: 'no-cors',
@@ -580,26 +596,16 @@
               message: newItem.message,
               status: newItem.status
             })
-          }).then(function () {
-            state.letters.unshift(newItem);
-            saveLetters();
-            inputMsg.value = '';
-            charCount.textContent = '0';
-            render();
-          
-            if (successBanner) {
-              successBanner.classList.remove('hidden');
-              if (successTimer) clearTimeout(successTimer);
-              successTimer = setTimeout(function () {
-                successBanner.classList.add('hidden');
-              }, 800);
-            }
-            showToast('ありがとうございます、送信しました');
           }).catch(function () {
-            showToast('送信できませんでした。時間をおいて再度お試しください');
-          });          inputMsg.value = '';
-          charCount.textContent = '0';
-          render();
+            state.letters = state.letters.filter(function (item) { return item.id !== newItem.id; });
+            saveLetters();
+            render();
+            inputName.value = name;
+            inputMsg.value = msg;
+            charCount.textContent = String(msg.length);
+            if (successBanner) successBanner.classList.add('hidden');
+            showToast('送信できませんでした。入力内容を戻しました');
+          });
         });
 
         document.getElementById('stockSearchInput').addEventListener('input', function (e) {
